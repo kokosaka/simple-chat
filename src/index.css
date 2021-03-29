@@ -2,7 +2,7 @@
   background-color: aliceblue;
 }
 .main {
-  width: 50vw;
+  width: 30vw;
   height: 100%;
   /* background-color: indigo; */
 }
@@ -10,27 +10,39 @@
 /* input, textarea, button {
   outline:none;
 } */
-
+/* login */
 .login {
   display: flex;
   flex-direction: column;
   align-items: center;
   /* background-color: lawngreen; */
+  height: 25vh;
 }
 .login-bar {
-  width: 15%;
+  width: 20%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  flex-grow: 2;
+  justify-content: space-evenly;
   /* background-color: lightblue; */
-  height: 50px;
+
 }
 #user {
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
-  border-bottom-style: solid;
+  border-bottom-style: hidden;
+  /* font-size: 25px; */
+  /* flex-grow: 1; */
 }
+#user:focus {
+  outline: none;
+}
+#login-button {
+  /* flex-grow: 1; */
+}
+
+/* chat */
 .chatScreen {
   display: flex;
   flex-direction: column;
@@ -49,15 +61,15 @@
   height: 5vh;
   border: hidden;
 }
-button {
+#message-button {
   flex-grow: 1;
 }
 
 .chats {
   /* background-color: brown; */
   display: flex;
-  /* flex-direction: column; */
-  flex-flow: column wrap;
+  flex-direction: column;
+  /* flex-flow: column wrap; */
   height: 75vh;
   overflow: scroll;
 }
