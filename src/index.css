@@ -54,9 +54,10 @@ button {
 }
 
 .chats {
-  background-color: brown;
+  /* background-color: brown; */
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  flex-flow: column wrap;
   height: 75vh;
   overflow: scroll;
 }
