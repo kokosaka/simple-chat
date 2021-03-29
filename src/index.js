@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { w3cwebsocket } from "websocket";
+import "./index.css";
+
 import Chat from "./chat";
 import Login from "./login";
-import "./index.css";
+import MessageInput from "./message-input";
 
 const client = new w3cwebsocket("ws://localhost:8000");
 
@@ -17,6 +19,7 @@ export default class App extends React.Component {
       messages: [],
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSend = this.handleSend.bind(this);
   }
 
   componentDidMount() {
@@ -39,11 +42,17 @@ export default class App extends React.Component {
       }
     };
   }
-  handleChange(e) {
-    var value = e.target.id === "isLoggedIn" ? true : e.target.value;
+  handleChange(event) {
+    event.preventDefault();
+    var value = event.target.id === "isLoggedIn" ? true : event.target.value;
+    // if (value === "isLoggedIn" && user.length < 3) {
+    //   prompt("please type in a username");
+    // } else {
     this.setState({
-      [e.target.id]: value,
+      [event.target.id]: value,
     });
+
+    // }
   }
 
   handleSend() {
@@ -63,20 +72,17 @@ export default class App extends React.Component {
     return (
       <div className="main">
         {this.state.isLoggedIn ? (
-          <div className="chats">
-            <div className="message-bar">
-              <input
-                type="text"
-                id="message"
-                placeholder="message"
-                value={this.state.message}
-                onChange={this.handleChange}
-              ></input>
-              <button onClick={() => this.handleSend()}>send</button>
+          <div className="chatScreen">
+            <div className="chats">
+              {this.state.messages.map((message, i) => (
+                <Chat key={i} message={message} userName={this.state.user} />
+              ))}
             </div>
-            {this.state.messages.map((message, i) => (
-              <Chat key={i} message={message} userName={this.state.user} />
-            ))}
+            <MessageInput
+              handleChange={this.handleChange}
+              handleSend={this.handleSend}
+              message={this.state.message}
+            />
           </div>
         ) : (
           <Login handleChange={this.handleChange} user={this.state.user} />

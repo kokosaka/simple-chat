@@ -4,18 +4,22 @@ export default function Login(props) {
   return (
     <div className="login">
       <h1>chat</h1>
-      <div className="login-bar">
+      <form
+        className="login-bar"
+        id="isLoggedIn"
+        onSubmit={(e) => props.handleChange(e)}
+      >
         <input
           type="text"
           id="user"
           placeholder="username"
+          required
+          minLength="3"
           value={props.user}
           onChange={props.handleChange}
         />
-        <button id="isLoggedIn" onClick={(e) => props.handleChange(e)}>
-          login
-        </button>
-      </div>
+        <button type="submit">login</button>
+      </form>
     </div>
   );
 }
