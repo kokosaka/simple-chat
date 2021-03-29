@@ -18,11 +18,13 @@ export default class App extends React.Component {
       message: "",
       messages: [],
     };
+    this.lastMessage = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleSend = this.handleSend.bind(this);
   }
 
   componentDidMount() {
+    const page = document.getElementsByClassName("chats");
     client.onopen = () => {
       console.log("websocket client connected");
     };
@@ -40,6 +42,7 @@ export default class App extends React.Component {
           ],
         }));
       }
+      this.scrollToBottom();
     };
   }
   handleChange(event) {
@@ -48,8 +51,6 @@ export default class App extends React.Component {
     this.setState({
       [event.target.id]: value,
     });
-
-    // }
   }
 
   handleSend() {
@@ -64,6 +65,9 @@ export default class App extends React.Component {
       message: "",
     });
   }
+  scrollToBottom() {
+    this.lastMessage.current.scrollIntoView();
+  }
 
   render() {
     return (
@@ -74,6 +78,7 @@ export default class App extends React.Component {
               {this.state.messages.map((message, i) => (
                 <Chat key={i} message={message} userName={this.state.user} />
               ))}
+              <div ref={this.lastMessage} id="ref" />
             </div>
             <MessageInput
               handleChange={this.handleChange}

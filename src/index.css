@@ -48,7 +48,7 @@
   flex-direction: column;
 }
 .message-bar {
-  background-color: aqua;
+  /* background-color: aqua; */
   /* position: fixed; */
   /* padding: 5px; */
   display: flex;
@@ -80,7 +80,7 @@
 }
 .chat {
   /* margin: 0; */
-  background-color: burlywood;
+  /* background-color: burlywood; */
   /* display: flex; */
   /* flex-wrap: wrap; */
   /* height: auto; */
