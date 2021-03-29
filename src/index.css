@@ -1,0 +1,66 @@
+#app {
+  background-color: aliceblue;
+}
+.main {
+  width: 50vw;
+  height: 100%;
+  /* background-color: indigo; */
+}
+
+/* input, textarea, button {
+  outline:none;
+} */
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: lawngreen; */
+}
+.login-bar {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: lightblue; */
+  height: 50px;
+}
+#user {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: solid;
+}
+.chatScreen {
+  display: flex;
+  flex-direction: column;
+}
+.message-bar {
+  background-color: aqua;
+  /* position: fixed; */
+  /* padding: 5px; */
+  display: flex;
+  /* bottom: 0; */
+  /* left: 0;? */
+  /* width: 95%; */
+}
+#message {
+  flex-grow: 5;
+  height: 5vh;
+  border: hidden;
+}
+button {
+  flex-grow: 1;
+}
+
+.chats {
+  background-color: brown;
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  overflow: scroll;
+}
+.chat {
+  /* margin: 0; */
+  /* background-color: burlywood; */
+}
