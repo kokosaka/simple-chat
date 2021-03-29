@@ -45,9 +45,6 @@ export default class App extends React.Component {
   handleChange(event) {
     event.preventDefault();
     var value = event.target.id === "isLoggedIn" ? true : event.target.value;
-    // if (value === "isLoggedIn" && user.length < 3) {
-    //   prompt("please type in a username");
-    // } else {
     this.setState({
       [event.target.id]: value,
     });

@@ -18,7 +18,9 @@ export default function Login(props) {
           value={props.user}
           onChange={props.handleChange}
         />
-        <button type="submit">login</button>
+        <button id="login-button" type="submit">
+          login
+        </button>
       </form>
     </div>
   );
