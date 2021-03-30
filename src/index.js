@@ -16,6 +16,7 @@ export default class App extends React.Component {
       isLoggedIn: false,
       user: "",
       message: "",
+      userColor: "",
       messages: [],
     };
     this.lastMessage = React.createRef();
@@ -24,7 +25,9 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const page = document.getElementsByClassName("chats");
+    this.setState({
+      userColor: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
+    });
     client.onopen = () => {
       console.log("websocket client connected");
     };
@@ -38,10 +41,15 @@ export default class App extends React.Component {
             {
               msg: data.msg,
               user: data.user,
+              color: data.color,
             },
           ],
         }));
       }
+      //create function to only allow auto scroll if user is at the bottom of the chats
+      // const page = document.getElementById("chats").style.marginTop;
+      // console.log(page);
+      // console.log(document.getElementById("chats").scrollY);
       this.scrollToBottom();
     };
   }
@@ -59,6 +67,7 @@ export default class App extends React.Component {
         type: "message",
         msg: this.state.message,
         user: this.state.user,
+        color: this.state.userColor,
       })
     );
     this.setState({
