@@ -12,7 +12,7 @@ export default function Login(props) {
         <input
           type="text"
           id="user"
-          placeholder="username"
+          placeholder="type in username"
           required
           minLength="3"
           value={props.user}
