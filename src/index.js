@@ -35,11 +35,9 @@ export default class App extends React.Component {
       console.log("client leaving");
       client.close();
     };
-    if (this.isLoggedIn) {
-      client.onopen = () => {
-        console.log("websocket client connected.");
-      };
-    }
+    client.onopen = () => {
+      console.log("websocket client connected.");
+    };
 
     client.onclose = function () {
       console.log("websocket server has closed.");
@@ -47,7 +45,6 @@ export default class App extends React.Component {
 
     client.onmessage = (message) => {
       const data = JSON.parse(message.data);
-      // const onUsers = JSON.parse(onlineUsers);
       console.log(data);
       if (data.type === "message") {
         this.setState((state) => ({
@@ -61,9 +58,6 @@ export default class App extends React.Component {
           ],
           numOfUsers: data.userCount,
         }));
-        // } else if (data.type === "userCount") {
-        //   this.setState({
-        //   });
       }
       this.scrollToBottom();
     };

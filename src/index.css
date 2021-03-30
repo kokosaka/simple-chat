@@ -1,4 +1,5 @@
 #app {
+  font-family: 'Times New Roman', Times, serif;
 }
 .main {
   width: 30vw;
@@ -53,6 +54,12 @@
 .chatScreen {
   display: flex;
   flex-direction: column;
+}
+.user-count {
+  color: rgb(148, 148, 148);
+  /* background-color: blueviolet; */
+  text-align: center;
+  /* font-size: (inherit-5px); */
 }
 .message-bar {
   /* background-color: rgb(63, 63, 63); */
