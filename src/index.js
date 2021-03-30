@@ -22,17 +22,35 @@ export default class App extends React.Component {
     this.lastMessage = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleSend = this.handleSend.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount() {
     this.setState({
       userColor: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
     });
+
+    window.onbeforeunload = function () {
+      // client.onclose = function () {
+      //   client.send(
+      //     JSON.stringify({
+      //       type: "message",
+      //       msg: `${this.state.user} has left the chat`,
+      //       user: this.state.user,
+      //       color: this.state.userColor,
+      //     })
+      //   );
+      // }; // disable onclose handler first
+      client.close();
+    };
+
     client.onopen = () => {
       console.log("websocket client connected");
     };
+
     client.onmessage = (message) => {
       const data = JSON.parse(message.data);
+      // const onUsers = JSON.parse(onlineUsers);
       console.log(data);
       if (data.type === "message") {
         this.setState((state) => ({
@@ -75,6 +93,7 @@ export default class App extends React.Component {
     });
   }
   scrollToBottom() {
+    if (!this.lastMessage.current) return;
     this.lastMessage.current.scrollIntoView();
   }
 
