@@ -14,6 +14,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isLoggedIn: false,
+      numOfUsers: 0,
       user: "",
       message: "",
       userColor: "",
@@ -31,21 +32,17 @@ export default class App extends React.Component {
     });
 
     window.onbeforeunload = function () {
-      // client.onclose = function () {
-      //   client.send(
-      //     JSON.stringify({
-      //       type: "message",
-      //       msg: `${this.state.user} has left the chat`,
-      //       user: this.state.user,
-      //       color: this.state.userColor,
-      //     })
-      //   );
-      // }; // disable onclose handler first
+      console.log("client leaving");
       client.close();
     };
+    if (this.isLoggedIn) {
+      client.onopen = () => {
+        console.log("websocket client connected.");
+      };
+    }
 
-    client.onopen = () => {
-      console.log("websocket client connected");
+    client.onclose = function () {
+      console.log("websocket server has closed.");
     };
 
     client.onmessage = (message) => {
@@ -62,18 +59,21 @@ export default class App extends React.Component {
               color: data.color,
             },
           ],
+          numOfUsers: data.userCount,
         }));
+        // } else if (data.type === "userCount") {
+        //   this.setState({
+        //   });
       }
-      //create function to only allow auto scroll if user is at the bottom of the chats
-      // const page = document.getElementById("chats").style.marginTop;
-      // console.log(page);
-      // console.log(document.getElementById("chats").scrollY);
       this.scrollToBottom();
     };
   }
   handleChange(event) {
     event.preventDefault();
     var value = event.target.id === "isLoggedIn" ? true : event.target.value;
+    if (event.target.id === "isLoggedIn") {
+      this.sendLogin();
+    }
     this.setState({
       [event.target.id]: value,
     });
@@ -83,6 +83,7 @@ export default class App extends React.Component {
     client.send(
       JSON.stringify({
         type: "message",
+        userCount: this.state.numOfUsers,
         msg: this.state.message,
         user: this.state.user,
         color: this.state.userColor,
@@ -92,6 +93,16 @@ export default class App extends React.Component {
       message: "",
     });
   }
+
+  sendLogin() {
+    client.send(
+      JSON.stringify({
+        type: "login",
+        user: this.state.user,
+      })
+    );
+  }
+
   scrollToBottom() {
     if (!this.lastMessage.current) return;
     this.lastMessage.current.scrollIntoView();
@@ -107,6 +118,9 @@ export default class App extends React.Component {
                 <Chat key={i} message={message} userName={this.state.user} />
               ))}
               <div ref={this.lastMessage} id="ref" />
+            </div>
+            <div className="user-count">
+              {this.state.numOfUsers} users are online
             </div>
             <MessageInput
               handleChange={this.handleChange}
