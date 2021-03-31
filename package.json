@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "PORT=3000 react-scripts start"
+    "start": "PORT=3000 react-scripts start",
+    "build": "react-scripts build",
+    "server": "nodemon ./server/index.js"
   },
   "keywords": [],
   "author": "",
