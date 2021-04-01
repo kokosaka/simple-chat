@@ -7,7 +7,9 @@ import Chat from "./chat";
 import Login from "./login";
 import MessageInput from "./message-input";
 
-const client = new w3cwebsocket("ws://localhost:8000");
+const client = new w3cwebsocket(
+  "wss://6fb4ykrs4g.execute-api.us-west-1.amazonaws.com/production/"
+);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -30,11 +32,11 @@ export default class App extends React.Component {
     this.setState({
       userColor: "#" + ((Math.random() * 0xffffff) << 0).toString(16),
     });
-
-    window.onbeforeunload = function () {
+    //visibilitychange
+    window.addEventListener("beforeunload", function () {
       console.log("client leaving");
       client.close();
-    };
+    });
     client.onopen = () => {
       console.log("websocket client connected.");
     };
@@ -44,8 +46,7 @@ export default class App extends React.Component {
     };
 
     client.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      console.log(data);
+      const data = JSON.parse(message.data).message;
       if (data.type === "message") {
         this.setState((state) => ({
           messages: [
@@ -76,11 +77,14 @@ export default class App extends React.Component {
   handleSend() {
     client.send(
       JSON.stringify({
-        type: "message",
-        userCount: this.state.numOfUsers,
-        msg: this.state.message,
-        user: this.state.user,
-        color: this.state.userColor,
+        action: "message",
+        msg: {
+          type: "message",
+          userCount: this.state.numOfUsers,
+          msg: this.state.message,
+          user: this.state.user,
+          color: this.state.userColor,
+        },
       })
     );
     this.setState({
@@ -91,8 +95,11 @@ export default class App extends React.Component {
   sendLogin() {
     client.send(
       JSON.stringify({
-        type: "login",
-        user: this.state.user,
+        action: "message",
+        msg: {
+          type: "login",
+          user: this.state.user,
+        },
       })
     );
   }
