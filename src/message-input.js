@@ -2,17 +2,20 @@ import React from "react";
 
 export default function MessageInput(props) {
   return (
-    <div className="message-bar">
-      <textarea
-        type="text"
-        id="message"
-        placeholder="message"
-        value={props.message}
-        onChange={props.handleChange}
-      />
-      <button id="message-button" onClick={() => props.handleSend()}>
-        send
-      </button>
+    <div>
+      <form className="message-bar" onSubmit={(e) => props.handleSend(e)}>
+        <textarea
+          type="text"
+          id="message"
+          required
+          value={props.message}
+          onChange={props.handleChange}
+          onKeyUp={props.handleEnter}
+        />
+        <button id="message-button" type="submit">
+          send
+        </button>
+      </form>
     </div>
   );
 }

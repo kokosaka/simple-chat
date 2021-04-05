@@ -8,6 +8,7 @@ import Login from "./login";
 import MessageInput from "./message-input";
 
 const client = new w3cwebsocket(
+  // "ws://localhost:8000/"
   "wss://6fb4ykrs4g.execute-api.us-west-1.amazonaws.com/production/"
 );
 
@@ -25,6 +26,7 @@ export default class App extends React.Component {
     this.lastMessage = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.handleSend = this.handleSend.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
@@ -92,6 +94,13 @@ export default class App extends React.Component {
     });
   }
 
+  handleEnter(event) {
+    var key = event.keyCode;
+    if (key === 13) {
+      this.handleSend();
+    }
+  }
+
   sendLogin() {
     client.send(
       JSON.stringify({
@@ -126,6 +135,7 @@ export default class App extends React.Component {
             <MessageInput
               handleChange={this.handleChange}
               handleSend={this.handleSend}
+              handleEnter={this.handleEnter}
               message={this.state.message}
             />
           </div>
