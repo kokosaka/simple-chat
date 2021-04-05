@@ -61,7 +61,7 @@ html {
 }
 #message-button {
   flex-grow: 1;
-  margin: 15px;
+  margin: 10px;
 }
 
 .chats {

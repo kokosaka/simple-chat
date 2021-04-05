@@ -76,7 +76,8 @@ export default class App extends React.Component {
     });
   }
 
-  handleSend() {
+  handleSend(event) {
+    event.preventDefault();
     client.send(
       JSON.stringify({
         action: "message",
@@ -97,7 +98,7 @@ export default class App extends React.Component {
   handleEnter(event) {
     var key = event.keyCode;
     if (key === 13) {
-      this.handleSend();
+      this.handleSend(event);
     }
   }
 
