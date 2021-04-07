@@ -9,7 +9,11 @@ import MessageInput from "./message-input";
 
 const client = new w3cwebsocket(
   // "ws://localhost:8000/"
-  "wss://6fb4ykrs4g.execute-api.us-west-1.amazonaws.com/production/"
+  //switch-case lambda api
+  // "wss://6fb4ykrs4g.execute-api.us-west-1.amazonaws.com/production/"
+
+  //separate lambda functions api
+  "wss://mgyyxh2zp3.execute-api.us-west-1.amazonaws.com/production"
 );
 
 export default class App extends React.Component {
@@ -44,7 +48,7 @@ export default class App extends React.Component {
     };
 
     client.onclose = function () {
-      console.log("websocket server has closed.");
+      console.log("connection timeout: disconnected from websocket.");
     };
 
     client.onmessage = (message) => {
